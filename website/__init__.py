@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import pymysql
 import random
 import string
 from os import path
+from flask_login import LoginManager
 
 #Initializing Database Connection
 db = SQLAlchemy()
@@ -38,6 +38,15 @@ def create_app():
 
     #Implementing database
     from .models import User, Note
+
+    #User session management
+    loginmanager = LoginManager()
+    loginmanager.login_view = 'auth.login'
+    loginmanager.init_app(app)
+
+    @loginmanager.user_loader
+    def load_user(userID):
+        return User.query.get(int(userID))
 
     return app
 
