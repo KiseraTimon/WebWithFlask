@@ -9,6 +9,24 @@ auth = Blueprint('auth', __name__)
 #Login URL
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    #Fetching form data
+    if request.method == 'POST':
+        uname =  request.form.get('uname')
+        password = request.form.get('password')
+
+        #Validate if the account exists
+        user = User.query.filter_by(uname = uname).first()
+        if user:
+            #Validate password
+            if check_password_hash(user.password, password):
+                flash(f'Login successfull', category='success')
+                return redirect(url_for('views.homepage'))
+            else:
+                flash(f'Incorrect password', category='error')
+        else:
+            flash(f'Username does not exist', category='error')
+
+
     return render_template("login.html")
 
 #Logout URL
