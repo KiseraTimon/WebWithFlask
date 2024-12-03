@@ -25,4 +25,20 @@ def signup():
         pass1 = request.form.get('pass1')
         pass2 = request.form.get('pass2')
 
+        #condition checking
+        if len(fname) < 1:
+            flash(f'First name length must be greater than 3', category='error')
+        elif len(lname) < 1:
+            flash(f'Last name length must be greater than 3', category='error')
+        elif len(uname) < 4:
+            flash(f'Username length must be greater than 3', category='error')
+        elif len(email) < 4:
+            flash(f'Email length must be greater than 3', category='error')
+        elif (len(pass1) and len(pass2)) < 7:
+            flash(f'Passwords must be at least 7 characters', category='error')
+        elif pass1 != pass2:
+            flash(f'Passwords do not match', category='error')
+        else:
+            flash(f'Account created successfully', category='success')
+
     return render_template("signup.html")
