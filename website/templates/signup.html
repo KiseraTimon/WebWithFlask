@@ -6,5 +6,51 @@
 
 <!--Content Block-->
 {% block content%}
-<h1>This is the signup page</h1>
+
+<!--Signup form-->
+<form method="POST">
+    <h3 align="center">Sign Up</h3>
+
+    <!--fname-->
+    <div class="form-group">
+        <label for="fname">First Name</label>
+        <input type="text", class="form-control" id="fname" name="fname" placeholder="Enter first name">
+    </div>
+
+    <!--lname-->
+    <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input type="text", class="form-control" id="lname" name="lname" placeholder="Enter last name">
+    </div>
+
+        <!--uname-->
+    <div class="form-group">
+        <label for="uname">Username</label>
+        <input type="text", class="form-control" id="uname" name="uname" placeholder="Enter username">
+    </div>
+
+    <!--email-->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email", class="form-control" id="email" name="email" placeholder="Enter email">
+    </div>
+
+    <!--pass1-->
+    <div class="form-group">
+        <label for="pass1">Password</label>
+        <input type="password", class="form-control" id="pass1" name="pass1" placeholder="Enter password">
+    </div>
+
+    <!--pass2-->
+    <div class="form-group">
+        <label for="pass2">Confirm Password</label>
+        <input type="password", class="form-control" id="pass2" name="pass2" placeholder="Confirm password">
+    </div>
+    <br>
+
+    <!--Submit button-->
+    <button type="submit" class="btn btn-primary">
+        Submit
+    </button>
+</form>
 {% endblock %}
