@@ -1,6 +1,12 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+import pymysql
 import random
 import string
+
+#Initializing Database Connection
+db = SQLAlchemy()
+DB_NAME = "WebWithFlask"
 
 #Initializing Flask
 def create_app():
@@ -15,6 +21,12 @@ def create_app():
     #Configuring random key
     key = random_key()
     app.config['SECRET_KEY'] = key
+
+    #Configuring database connection
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/db_name'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    db.init_app(app)
+
 
     #Importing blueprints
     from .views import views
