@@ -16,6 +16,10 @@ class User(db.Model, UserMixin):
     #Relationships
     notes = db.relationship('Note')
 
+    # Overriding get_id method for Flask-Login compatibility
+    def get_id(self):
+        return str(self.userID)
+
 #Notes model
 class Note(db.Model):
     #Fields
