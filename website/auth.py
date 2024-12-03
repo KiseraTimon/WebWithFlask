@@ -1,4 +1,7 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from .models import User
+from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
 
 #Defining the file as a blueprint
 auth = Blueprint('auth', __name__)
@@ -25,8 +28,13 @@ def signup():
         pass1 = request.form.get('pass1')
         pass2 = request.form.get('pass2')
 
+        #Validate if similar account exists
+        user = User.query.filter((User.email == email) | (User.uname == uname)).first()
+
         #condition checking
-        if len(fname) < 1:
+        if user:
+            flash('Username or email already exists', category='error')
+        elif len(fname) < 1:
             flash(f'First name length must be greater than 3', category='error')
         elif len(lname) < 1:
             flash(f'Last name length must be greater than 3', category='error')
@@ -39,6 +47,16 @@ def signup():
         elif pass1 != pass2:
             flash(f'Passwords do not match', category='error')
         else:
+            #Populating database with input details
+            new_user = User(fname=fname, lname=lname, uname=uname, email=email, password=generate_password_hash(pass1))
+            
+            #Pushing to the database
+            db.session.add(new_user)
+            db.session.commit()
+        
+            #Output message
             flash(f'Account created successfully', category='success')
+
+            return redirect(url_for('views.homepage'))
 
     return render_template("signup.html")
