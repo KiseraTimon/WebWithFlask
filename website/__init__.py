@@ -12,8 +12,14 @@ def create_app():
         randkey = ''.join(random.choices(char, k=length))
         return randkey
 
+    #Configuring random key
     key = random_key()
-
-    #Configure random key
     app.config['SECRET_KEY'] = key
+
+    #Importing blueprints
+    from .views import views
+
+    #Registering blueprints
+    app.register_blueprint(views, url_prefix='/')
+
     return app
