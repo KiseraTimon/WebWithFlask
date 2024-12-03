@@ -7,7 +7,7 @@ from os import path
 
 #Initializing Database Connection
 db = SQLAlchemy()
-DB_NAME = "webwithflask.db"
+DB_NAME = "database.db"
 
 #Initializing Flask
 def create_app():
@@ -44,5 +44,5 @@ def create_app():
 #Database creation
 def create_database(app):
     if not path.exists('website/ '+DB_NAME):
-        db.create_all(app=app)
+        db.create_all()
         print('Created Database!')
